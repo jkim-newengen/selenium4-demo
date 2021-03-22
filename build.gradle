@@ -1,0 +1,59 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'maven-publish'
+}
+
+version = '1.0'
+group = 'com.byjove.qa.demo'
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+repositories {
+    mavenCentral()
+    jcenter()
+//    maven {
+//        url 's3://artifacts.newengen.com/release'
+//
+//        authentication {
+//            awsIm(AwsImAuthentication) // load from EC2 role or env var
+//        }
+//    }
+}
+
+tasks.withType(Test) {
+    useJUnitPlatform()
+}
+
+ext {
+    lombok = '1.18.16'
+    selenium = '4.0.0-beta-2'
+    webdrivermanager = '4.3.1'
+    junitjupiter = '5.4.2'
+    assertJ = '3.9.1'
+    slf4j = '1.7.25'
+    logback = '1.2.3'
+    dockerclient = '8.15.2'
+}
+
+dependencies {
+    compile("org.projectlombok:lombok:${lombok}")
+    annotationProcessor("org.projectlombok:lombok:${lombok}")
+
+    compile("org.junit.jupiter:junit-jupiter-engine:${junitjupiter}")
+    compile("org.junit.jupiter:junit-jupiter-params:${junitjupiter}")
+    compile("org.junit.platform:junit-platform-runner:1.5.2")
+
+    compile("org.assertj:assertj-core:${assertJ}")
+    compile("org.slf4j:slf4j-api:${slf4j}")
+    compile("ch.qos.logback:logback-classic:${logback}")
+    compile("ch.qos.logback:logback-core:${logback}")
+
+    implementation("org.seleniumhq.selenium:selenium-java:${selenium}")
+    implementation("io.github.bonigarcia:webdrivermanager:${webdrivermanager}")
+    implementation("org.seleniumhq.selenium:selenium-devtools:4.0.0-beta-2")
+
+    compile("org.apache.commons:commons-lang3:3.0")
+    compile("org.awaitility:awaitility:4.0.1")
+    compile("com.spotify:docker-client:${dockerclient}")
+}

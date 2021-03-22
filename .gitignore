@@ -1,0 +1,15 @@
+bin
+target
+build
+out
+.idea
+.gradle
+.classpath
+.project
+.settings
+*.iml
+phantomjsdriver.log
+*.mp4
+test.log
+gradle.properties
+*.swp
