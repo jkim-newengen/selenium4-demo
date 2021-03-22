@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property name="LOG_FILE" value="test" />
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss} %-5level [%thread]: %message%n</pattern>
+            <!-- reference on patterns: https://logback.qos.ch/manual/layouts.html#conversionWord -->
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}.gz</fileNamePattern>
+
+            <!-- keep 30 days' worth of history capped at 3GB total size -->
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>3GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--
+    LOGLEVEL: TRACE > DEBUG > INFO > WARN > ERROR
+    -->
+    <logger name="com.newengen.qa.ui.lorian.tests" level="DEBUG"  additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <logger name="ch.qos.logback" level="WARN"  additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <logger name="org.openqa.selenium" level="OFF"  additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <logger name="org.junit.platform" level="WARN"  additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <logger name="io.github.bonigarcia" level="WARN"  additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <logger name="org.apache" level="ERROR" />
+    <logger name="httpclient" level="ERROR" />
+
+
+    <!-- if not defined above, will be assigned to root logger -->
+    <root level="TRACE">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+</configuration>
